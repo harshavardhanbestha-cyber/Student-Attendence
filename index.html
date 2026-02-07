@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Attendance Register</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="title">
+                    <span class="icon">📋</span>
+                    QR Attendance Register
+                </h1>
+                <p class="subtitle">Scan the QR code to mark your attendance</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- QR Code Section -->
+            <section class="qr-section">
+                <div class="qr-card">
+                    <div class="qr-header">
+                        <h2>Scan to Register</h2>
+                        <div class="pulse-indicator"></div>
+                    </div>
+                    <div class="qr-container">
+                        <div id="qrcode"></div>
+                        <div class="qr-overlay">
+                            <div class="scan-line"></div>
+                        </div>
+                    </div>
+                    <p class="qr-instruction">Point your camera at the QR code</p>
+                    <button class="btn-primary" onclick="openForm()">
+                        <span>📱</span> Open Form Directly
+                    </button>
+                </div>
+            </section>
+
+            <!-- Stats Section -->
+            <section class="stats-section">
+                <div class="stat-card">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-content">
+                        <h3 id="totalCount">0</h3>
+                        <p>Total Registered</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-content">
+                        <h3 id="todayCount">0</h3>
+                        <p>Today's Attendance</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🕐</div>
+                    <div class="stat-content">
+                        <h3 id="currentTime">--:--</h3>
+                        <p>Current Time</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Attendance List Section -->
+            <section class="attendance-section">
+                <div class="section-header">
+                    <h2>
+                        <span class="icon">📊</span>
+                        Live Attendance Status
+                    </h2>
+                    <div class="header-buttons">
+                        <button class="btn-export" onclick="exportToExcel()">
+                            <span>📥</span> Export to Excel
+                        </button>
+                        <button class="btn-refresh" onclick="refreshAttendance()">
+                            <span class="refresh-icon">🔄</span> Refresh
+                        </button>
+                    </div>
+                </div>
+
+                <div class="filter-controls">
+                    <div class="filter-dropdown">
+                        <label for="statusFilter">Filter by Status:</label>
+                        <select id="statusFilter" onchange="filterAttendance()">
+                            <option value="all">All</option>
+                            <option value="pending">Pending</option>
+                            <option value="accepted">Accepted</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                    </div>
+                    <div class="search-bar">
+                        <input type="text" id="searchInput" placeholder="Search by name or USN..."
+                            onkeyup="filterAttendance()">
+                        <span class="search-icon">🔍</span>
+                    </div>
+                </div>
+
+                <div class="attendance-list" id="attendanceList">
+                    <!-- Attendance records will be dynamically inserted here -->
+                    <div class="empty-state">
+                        <div class="empty-icon">📭</div>
+                        <p>No attendance records yet</p>
+                        <small>Students will appear here after scanning the QR code</small>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Last updated: <span id="lastUpdate">Never</span></p>
+        </footer>
+    </div>
+
+    <!-- QR Code Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
