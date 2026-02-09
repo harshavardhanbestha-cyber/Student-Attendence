@@ -2,8 +2,8 @@
 const CONFIG = {
     // Replace this with your actual Google Form URL
     GOOGLE_FORM_URL: 'https://docs.google.com/forms/d/e/1FAIpQLScce0Y8djY07-pLNnZBQAhjids9JZlAdRavgF6a1Ia576Ap0w/viewform?usp=publish-editor',
-    // Google Apps Script Web App URL (after deploying the script)
-    APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbxTdFaER2W72LD9AjJS1TukfAr8dd7ou8Yi2uwFC-uvxXL-hyU1Z9AqrDdmY3akLJQc/exec', // Paste your Apps Script URL here after deployment
+    // Google Apps Script Web App URL (From SHEET_APP_SCRIPT.txt)
+    APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbxTdFaER2W72LD9AjJS1TukfAr8dd7ou8Yi2uwFC-uvxXL-hyU1Z9AqrDdmY3akLJQc/exec', // Paste your SHEET script URL here
     // For demo purposes, we'll use localStorage as a simple database
     // In production, you would connect to a real backend/database
     STORAGE_KEY: 'attendance_records',
@@ -14,6 +14,12 @@ const CONFIG = {
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function () {
+    // Auth Check
+    if (localStorage.getItem('isLoggedIn') !== 'true') {
+        window.location.href = 'login.html';
+        return; // Stop execution
+    }
+
     initializeQRCode();
     loadAttendanceRecords();
     updateStats();
@@ -28,6 +34,12 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+function logout() {
+    localStorage.removeItem('isLoggedIn');
+    window.location.href = 'login.html';
+}
+
 
 // Generate QR Code
 function initializeQRCode() {
